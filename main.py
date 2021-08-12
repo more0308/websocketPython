@@ -6,7 +6,6 @@ from typing import List
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-db = redis.Redis(host='127.0.0.1', port='6379')
 class User:
     id: int
     name: str
@@ -51,9 +50,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int, client_name: 
     try:
         await manager.broadcast('JOIN', client_name, client_id)
         #await manager.add_users()
-        db.set('id', 1)
-        db.append('id', 2)
-        print(db.get('id'))
         await manager.broadcast('SEND_MESSAGE', f"{client_name} присойденился к Мужикам", client_id)
 
         while True:
